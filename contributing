@@ -21,7 +21,7 @@ git checkout -b my-feature
 
 ### 3. Code & Test
 
-- Keep the Caesar cipher logic intact (offset + % 26)
+- Keep the Caesar cipher logic intact (setter + % 26)
 - Letters get shifted, special characters stay untouched
 - Test encrypt and decrypt with different shifts
 - Make sure your code works with positive and negative shift values
