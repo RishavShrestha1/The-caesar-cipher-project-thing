@@ -4,6 +4,12 @@ def display_welcome():
     print(" ")
 
 def decrypt():
+    '''
+    so when the user enters somethinglike 'z' just adding the shift value to it i.e 122(z) + 3(shift value) 
+    doesnot give an alphabet it rather gives '{' which is not what I want. So in order to fix this, I first
+    converted the letter into an alphabet number/index then '%26' makes sure that the value that is shifted
+    stays around tha alphabet. So basically, z + 3 gives c. 
+    '''
     text = input("Enter text to decipher: ").lower()
     shift = int(input("Shift by how much: "))
     decrypted_text = []
@@ -18,7 +24,6 @@ def decrypt():
         else:
             decrypted_text.append(ch)
     
-    print("\nDecrypted: ", end="")
     for ch in decrypted_text:
         print(ch.upper(), end="")
     print("\n")
@@ -38,7 +43,6 @@ def encrypt():
         else:
             encrypted_text.append(ch)
     
-    print("\nEncrypted: ", end="")
     for ch in encrypted_text:
         print(ch.upper(), end="")
     print("\n")
@@ -56,6 +60,18 @@ def enter_message():
             decrypt()
         else:
             print("Invalid mode\n")
+
+def process_file():
+    pass
+    
+def write_messages():
+    pass
+
+def is_file():
+    pass
+
+def message_or_file():
+    pass
 
 def main():
     display_welcome()
