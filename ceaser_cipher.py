@@ -1,5 +1,4 @@
 import os
-
 def display_welcome():
     print(" ")
     print("------Welcome to THE DECIPHER-er------")
@@ -85,23 +84,34 @@ def process_file(filename, conv_mode):
                     converted_line += chr(base + setter)  
                 else:
                     converted_line += ch  
+                    
+                if letter_to_number >= 65 and letter_to_number <= 90:
+                    base = 65
+                    setter = letter_to_number - base 
+                    
+                    if conv_mode == 'e':
+                        setter = (setter + shift) % 26
+                    elif conv_mode == 'd':
+                        setter = (setter - shift ) %26
             
             converted.append(converted_line)  
         
         for line in converted:
             print(line, end="")
-    pass
     
-def write_messages():
-    pass
+def write_messages(text:str):
+    with open("result.txt", "a") as file:
+        for lines in text:
+            file.write(f"{lines}")
+
+write_messages("test 1,will this work?")
 
 def is_file():
     path = input("Enter filename : ")
-    
     if os.path.isfile(path):
-        print("is path")
+        return True
     else:
-        print("no path")
+        return False
 
 def message_or_file():
     pass
@@ -109,6 +119,3 @@ def message_or_file():
 def main():
     display_welcome()
     enter_message()
-    
-is_file()
-process_file("testfile.txt", 'e')
