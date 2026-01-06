@@ -1,3 +1,5 @@
+import os
+
 def display_welcome():
     print(" ")
     print("------Welcome to THE DECIPHER-er------")
@@ -61,14 +63,45 @@ def enter_message():
         else:
             print("Invalid mode\n")
 
-def process_file():
+def process_file(filename, conv_mode):
+    shift = int(input("Shift by how much : "))
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+        converted = []
+        
+        for line in lines:
+            converted_line = ""  
+            for ch in line:
+                letter_to_number = ord(ch)
+                if letter_to_number >= 97 and letter_to_number <= 122:
+                    base = 97
+                    setter = letter_to_number - base
+                    
+                    if conv_mode == 'e':
+                        setter = (setter + shift) % 26  
+                    elif conv_mode == 'd':
+                        setter = (setter - shift) % 26 
+                    
+                    converted_line += chr(base + setter)  
+                else:
+                    converted_line += ch  
+            
+            converted.append(converted_line)  
+        
+        for line in converted:
+            print(line, end="")
     pass
     
 def write_messages():
     pass
 
 def is_file():
-    pass
+    path = input("Enter filename : ")
+    
+    if os.path.isfile(path):
+        print("is path")
+    else:
+        print("no path")
 
 def message_or_file():
     pass
@@ -76,3 +109,6 @@ def message_or_file():
 def main():
     display_welcome()
     enter_message()
+    
+is_file()
+process_file("testfile.txt", 'e')
