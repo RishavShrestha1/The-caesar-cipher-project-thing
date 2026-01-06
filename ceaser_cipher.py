@@ -1,13 +1,14 @@
 import os
 def display_welcome():
     print(" ")
-    print("------Welcome to THE DECIPHER-er------")
+    print("Welcome to the Caesar Cipher")
+    print("\n This program encrypts and decrypts text using Caesar Cipher.")
     print(" ")
 
 def decrypt():
     '''
     so when the user enters somethinglike 'z' just adding the shift value to it i.e 122(z) + 3(shift value) 
-    doesnot give an alphabet it rather gives '{' which is not what I want. So in order to fix this, I first
+    it doesnot give an alphabet it rather gives '{' which is not what I want. So in order to fix this, I first
     converted the letter into an alphabet number/index then '%26' makes sure that the value that is shifted
     stays around tha alphabet. So basically, z + 3 gives c. 
     '''
@@ -114,7 +115,35 @@ def is_file():
         return False
 
 def message_or_file():
-    pass
+    while True:
+        choice = input("\nWould you like to encrypt(e), decrypt(d), or exit(x)? : ").lower()
+        
+        if choice == 'x':
+            print("TATA, BYE BYE")
+            break
+        
+        elif choice == 'e':
+            file_or_msg = input("Read from file(f) or console(c)? : ").lower()
+            if file_or_msg == 'f':
+                f_name = input("Enter file name: ")
+                process_file(f_name, choice)
+            elif file_or_msg == 'c':
+                encrypt()
+            else:
+                print("Invalid choice. Please enter 'f' or 'c'.")
+        
+        elif choice == 'd':
+            file_or_msg = input("Read from file(f) or console(c)? : ").lower()
+            if file_or_msg == 'f':
+                f_name = input("Enter file name: ")
+                process_file(f_name, choice)
+            elif file_or_msg == 'c':
+                decrypt()
+            else:
+                print("Invalid choice. Please enter 'f' or 'c'.")
+        
+        else:
+            print("Invalid choice. Please enter 'e', 'd', or 'x'.")
 
 def main():
     display_welcome()
