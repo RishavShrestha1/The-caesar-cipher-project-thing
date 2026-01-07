@@ -88,7 +88,6 @@ def process_file(filename, conv_mode):
                         
                         converted_line += chr(base + setter)
                     
-                    # Non-alphabetic characters
                     else:
                         converted_line += ch
                 
@@ -99,6 +98,14 @@ def process_file(filename, conv_mode):
                 
     except FileNotFoundError:
         print(f"Error: File '{filename}' not found.\n")
+
+def write_messsages(text):
+    '''
+    This function is not called anywhere
+    '''
+    with open("result.txt", "a") as file:
+        for lines in text:
+            file.write(lines)
 
 def message_or_file():
     while True:
@@ -131,16 +138,5 @@ def message_or_file():
         else:
             print("Invalid choice. Please enter 'e', 'd', or 'x'.")
 
-'''
-If you want to be fancy, you can do
-def main():
-    display_welcome()
-    message_or_file()
-
-if __name__ == "__main__":
-    main()
-If you get asked what are __name__ and __main__, just say that these are magic methods
-Yes they are literally called magic methods
-'''
 display_welcome()
 message_or_file()
