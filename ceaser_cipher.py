@@ -1,4 +1,5 @@
 import os
+
 def display_welcome():
     print(" ")
     print("Welcome to the Caesar Cipher")
@@ -6,12 +7,6 @@ def display_welcome():
     print(" ")
 
 def decrypt():
-    '''
-    so when the user enters somethinglike 'z' just adding the shift value to it i.e 122(z) + 3(shift value) 
-    it doesnot give an alphabet it rather gives '{' which is not what I want. So in order to fix this, I first
-    converted the letter into an alphabet number/index then '%26' makes sure that the value that is shifted
-    stays around tha alphabet. So basically, z + 3 gives c. 
-    '''
     text = input("Enter text to decipher: ").lower()
     shift = int(input("Shift by how much: "))
     decrypted_text = []
@@ -21,8 +16,8 @@ def decrypt():
         if letter_to_number >= 97 and letter_to_number <= 122:
             base = 97
             setter = letter_to_number - base
-            setter = setter - shift
-            decrypted_text.append(chr(base + setter % 26))
+            setter = (setter - shift) % 26
+            decrypted_text.append(chr(base + setter))
         else:
             decrypted_text.append(ch)
     
@@ -40,86 +35,77 @@ def encrypt():
         if letter_to_number >= 97 and letter_to_number <= 122:
             base = 97
             setter = letter_to_number - base
-            setter = setter + shift
-            encrypted_text.append(chr(base + setter % 26))
+            setter = (setter + shift) % 26
+            encrypted_text.append(chr(base + setter))
         else:
             encrypted_text.append(ch)
     
     for ch in encrypted_text:
         print(ch.upper(), end="")
     print("\n")
-
-def enter_message():
-    while True:
-        conv_mode = input("Encrypt(e) or Decrypt(d) or exit to exit: ")
-        
-        if conv_mode == 'exit':
-            print("Thanks for using this!")
-            break
-        elif conv_mode == 'e':
-            encrypt()
-        elif conv_mode == 'd':
-            decrypt()
-        else:
-            print("Invalid mode\n")
-
-def process_file(filename, conv_mode):
-    shift = int(input("Shift by how much : "))
-    with open(filename, 'r') as file:
-        lines = file.readlines()
-        converted = []
-        
-        for line in lines:
-            converted_line = ""  
-            for ch in line:
-                letter_to_number = ord(ch)
-                if letter_to_number >= 97 and letter_to_number <= 122:
-                    base = 97
-                    setter = letter_to_number - base
-                    
-                    if conv_mode == 'e':
-                        setter = (setter + shift) % 26  
-                    elif conv_mode == 'd':
-                        setter = (setter - shift) % 26 
-                    
-                    converted_line += chr(base + setter)  
-                else:
-                    converted_line += ch  
-                    
-                if letter_to_number >= 65 and letter_to_number <= 90:
-                    base = 65
-                    setter = letter_to_number - base 
-                    
-                    if conv_mode == 'e':
-                        setter = (setter + shift) % 26
-                    elif conv_mode == 'd':
-                        setter = (setter - shift ) %26
-            
-            converted.append(converted_line)  
-        
-        for line in converted:
-            print(line, end="")
     
-def write_messages(text:str):
-    with open("result.txt", "a") as file:
-        for lines in text:
-            file.write(f"{lines}")
-
-write_messages("test 1,will this work?")
-
-def is_file():
-    path = input("Enter filename : ")
-    if os.path.isfile(path):
+def is_file(filename):
+    '''
+    This function is not called anywhere because I have already setup a error handling 
+    in teh process_file function.
+    '''
+    if os.path.isfile(filename):
         return True
     else:
         return False
+
+def process_file(filename, conv_mode):
+    shift = int(input("Shift by how much : "))
+    try:
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+            converted = []
+            
+            for line in lines:
+                converted_line = ""  
+                for ch in line:
+                    letter_to_number = ord(ch)
+                    
+                    if letter_to_number >= 97 and letter_to_number <= 122:
+                        base = 97
+                        setter = letter_to_number - base
+                        
+                        if conv_mode == 'e':
+                            setter = (setter + shift) % 26  
+                        elif conv_mode == 'd':
+                            setter = (setter - shift) % 26 
+                        
+                        converted_line += chr(base + setter)
+                    
+                    elif letter_to_number >= 65 and letter_to_number <= 90:
+                        base = 65
+                        setter = letter_to_number - base 
+                        
+                        if conv_mode == 'e':
+                            setter = (setter + shift) % 26
+                        elif conv_mode == 'd':
+                            setter = (setter - shift) % 26
+                        
+                        converted_line += chr(base + setter)
+                    
+                    # Non-alphabetic characters
+                    else:
+                        converted_line += ch
+                
+                converted.append(converted_line)  
+            
+            for line in converted:
+                print(line, end="")
+                
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found.\n")
 
 def message_or_file():
     while True:
         choice = input("\nWould you like to encrypt(e), decrypt(d), or exit(x)? : ").lower()
         
         if choice == 'x':
-            print("TATA, BYE BYE")
+            print("Thanks for using!")
             break
         
         elif choice == 'e':
@@ -145,6 +131,16 @@ def message_or_file():
         else:
             print("Invalid choice. Please enter 'e', 'd', or 'x'.")
 
+'''
+If you want to be fancy, you can do
 def main():
     display_welcome()
-    enter_message()
+    message_or_file()
+
+if __name__ == "__main__":
+    main()
+If you get asked what are __name__ and __main__, just say that these are magic methods
+Yes they are literally called magic methods
+'''
+display_welcome()
+message_or_file()
