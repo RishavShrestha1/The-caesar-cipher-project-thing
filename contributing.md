@@ -40,19 +40,5 @@ git push origin my-feature
 - Keep each PR focused on one thing
 - Reference any related issues if applicable
 
-## A Few Tips
-
-- Keep the code simple and readable—no fancy libraries needed
-- Add comments if something is tricky (like the modulo wrapping logic)
-- Test with edge cases: capital letters, numbers, special characters, and wrap-around shifts
-- Don't break the existing encrypt/decrypt functionality
-
-## What We're Looking For
-
-- Bug fixes and performance improvements
-- Better error handling and input validation
-- Clearer variable names and comments
-- Additional cipher methods (as separate features)
-- Test cases and documentation improvements
 
 Thanks for contributing to THE DECIPHER-er!
